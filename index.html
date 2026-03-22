@@ -148,6 +148,7 @@
     font-family: var(--font-h); font-size: 13px; font-weight: 600;
     padding: 10px 26px; border-radius: var(--r-pill);
     background: var(--bright); color: #FFFFFF; border: none; cursor: pointer;
+    text-decoration: none; display: inline-block;
     transition: transform 0.2s var(--ease), box-shadow 0.3s, background 0.3s;
   }
   .nav-cta:hover {
@@ -227,6 +228,7 @@
     font-family: var(--font-h); font-weight: 600; font-size: 15px;
     padding: 16px 36px; border-radius: var(--r-pill);
     background: var(--bright); color: #fff; border: none; cursor: pointer;
+    text-decoration: none; display: inline-block;
     transition: transform 0.25s var(--ease), box-shadow 0.4s, background 0.3s;
   }
   .btn-green:hover {
@@ -629,12 +631,12 @@
 <nav class="nav">
   <div class="nav-logo">Bridge <span class="ai">AI</span> Knowledge</div>
   <ul class="nav-links"><li>Services</li><li>Case Studies</li><li>About</li><li>Insights</li></ul>
-  <button class="nav-cta">Let's Talk</button>
+  <a href="https://calendly.com/jonathankurniawan/30-min-call" target="_blank" class="nav-cta">Let's Talk</a>
   <button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')" aria-label="Menu">☰</button>
 </nav>
 <div class="mobile-menu">
   <button class="close-menu" onclick="this.parentElement.classList.remove('open')">&times;</button>
-  <ul><li>Services</li><li>Case Studies</li><li>About</li><li>Insights</li><li><button class="nav-cta">Let's Talk</button></li></ul>
+  <ul><li>Services</li><li>Case Studies</li><li>About</li><li>Insights</li><li><a href="https://calendly.com/jonathankurniawan/30-min-call" target="_blank" class="nav-cta">Let's Talk</a></li></ul>
 </div>
 
 <section class="hero">
@@ -642,7 +644,7 @@
   <h1>Your Path to <span class="acc">Production AI</span> Starts Here</h1>
   <p class="hero-sub">Bridge AI Knowledge is a leading AI consultancy that delivers transformation services to guide organizations into the new era of AI.</p>
   <div class="hero-ctas">
-    <button class="btn-green">Let's Talk</button>
+    <a href="https://calendly.com/jonathankurniawan/30-min-call" target="_blank" class="btn-green">Let's Talk</a>
     <button class="btn-ghost">See our case studies <span>→</span></button>
   </div>
 </section>
@@ -714,7 +716,7 @@
   <div class="cta-glow"></div>
   <h2>Tell us what you're<br>trying to build</h2>
   <p class="sub">We'll tell you if AI is the right answer, what it'll cost, and how fast we can ship it. No pitch deck, just a straight conversation.</p>
-  <button class="btn-green">Let's Talk</button>
+  <a href="https://calendly.com/jonathankurniawan/30-min-call" target="_blank" class="btn-green">Let's Talk</a>
 </section>
 
 <footer class="foot">

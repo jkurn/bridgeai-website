@@ -282,6 +282,33 @@
     font-weight: 400; letter-spacing: -0.03em;
     margin-bottom: 48px; line-height: 1.12;
   }
+  /* ═══ VALUE PROPS ═══ */
+  .value-props { padding: 80px 0; }
+  .value-props h2 {
+    font-family: var(--font-h); font-size: clamp(36px, 4vw, 52px);
+    font-weight: 400; letter-spacing: -0.03em;
+    margin-bottom: 16px; line-height: 1.12;
+  }
+  .value-props .vp-sub {
+    font-family: var(--font-b); font-size: 18px; color: var(--text-mid);
+    line-height: 1.7; margin-bottom: 48px; max-width: 600px;
+  }
+  .vp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .vp {
+    background: var(--bg-glass); border: 1px solid var(--text-line);
+    border-radius: var(--r-lg); padding: 36px 32px;
+    transition: all 0.35s var(--ease);
+  }
+  .vp:hover { border-color: rgba(0,89,79,0.2); transform: translateY(-4px); }
+  .vp h3 {
+    font-family: var(--font-h); font-size: 20px; font-weight: 500;
+    margin-bottom: 12px; letter-spacing: -0.02em;
+  }
+  .vp p {
+    font-family: var(--font-b); font-size: 15px; font-weight: 300;
+    color: var(--text-mid); line-height: 1.7;
+  }
+
   .svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
   .svc {
     background: var(--bg-glass); border: 1px solid var(--text-line);
@@ -608,7 +635,7 @@
   .reveal-delay-3 { transition-delay: 0.3s; }
 
   @media (max-width: 768px) {
-    .svc-grid, .proc-grid { grid-template-columns: 1fr; }
+    .vp-grid, .svc-grid, .proc-grid { grid-template-columns: 1fr; }
     .case-grid, .m-row, .stats, .comp-grid { grid-template-columns: 1fr; }
     .nav { margin: 0 -24px; padding: 18px 24px; }
     .nav-links { display: none; }
@@ -661,6 +688,27 @@
   </div>
 </div>
 
+<section class="value-props reveal">
+  <h2>We saw the need for change</h2>
+  <p class="vp-sub">Are you tired of AI projects that fail to deliver real business impact?</p>
+  <div class="vp-grid">
+    <div class="vp reveal reveal-delay-1">
+      <h3>End-to-End AI Journey</h3>
+      <p>Most AI projects fail because they either have no business impact or never make it past PoCs. We guide you from discovery to implementation.</p>
+    </div>
+    <div class="vp reveal reveal-delay-2">
+      <h3>Time & Resource Efficiency</h3>
+      <p>Wasting time on AI experiments with no clear ROI is a thing of the past. We focus on solutions that deliver immediate business value.</p>
+    </div>
+    <div class="vp reveal reveal-delay-3">
+      <h3>Business-First Approach</h3>
+      <p>We start with your business challenges, then architect AI solutions that deliver tangible results. Not the other way around.</p>
+    </div>
+  </div>
+</section>
+
+<div class="stripe"></div>
+
 <section class="services reveal">
   <h2>What we do</h2>
   <div class="svc-grid">
@@ -682,6 +730,24 @@
       <p>Your AI is only as good as the data feeding it. We connect your existing systems, clean the pipes, and build the APIs so everything talks to each other.</p>
       <div class="svc-link">Learn more <span>→</span></div>
     </div>
+    <div class="svc reveal reveal-delay-1">
+      <div class="svc-icon">△</div>
+      <h3>AI Transformation<br>Program</h3>
+      <p>A comprehensive AI adoption framework. We guide you through every stage, from strategy development to full-scale implementation across your organization.</p>
+      <div class="svc-link">Learn more <span>→</span></div>
+    </div>
+    <div class="svc reveal reveal-delay-2">
+      <div class="svc-icon">⬢</div>
+      <h3>Enterprise Data<br>Foundation</h3>
+      <p>We create an AI-ready ecosystem that turns your data into a strategic asset. Clean pipelines, proper governance, and architecture that scales.</p>
+      <div class="svc-link">Learn more <span>→</span></div>
+    </div>
+    <div class="svc reveal reveal-delay-3">
+      <div class="svc-icon">◉</div>
+      <h3>Industry-Specific<br>Solutions</h3>
+      <p>Specialized AI implementations for insurance, marketing, compliance, and other industries with proven ROI and rapid deployment.</p>
+      <div class="svc-link">Learn more <span>→</span></div>
+    </div>
   </div>
 </section>
 
@@ -697,6 +763,8 @@
     <div class="case"><span class="case-arrow">↗</span><div class="case-tag">Market Research</div><div class="case-client">Nielsen</div><div class="case-title">Internal AI assistant on Teams that answers questions from 10K+ documents</div><div class="case-metrics"><div><div class="cm-v">Live</div><div class="cm-l">Production</div></div><div><div class="cm-v">Phase 1</div><div class="cm-l">Deployed</div></div></div></div>
     <div class="case"><span class="case-arrow">↗</span><div class="case-tag">Consumer Goods</div><div class="case-client">Unilever</div><div class="case-title">Turns meeting recordings into decisions, owners, and deadlines automatically</div><div class="case-metrics"><div><div class="cm-v">Shipped</div><div class="cm-l">Jan 2026</div></div></div></div>
     <div class="case"><span class="case-arrow">↗</span><div class="case-tag">Insurance</div><div class="case-client">Enterprise Client</div><div class="case-title">Claims processing that reads documents, talks to customers on WhatsApp, and closes 70% faster</div><div class="case-metrics"><div><div class="cm-v">70%</div><div class="cm-l">Faster</div></div><div><div class="cm-v">$250K</div><div class="cm-l">Saved/yr</div></div></div></div>
+    <div class="case"><span class="case-arrow">↗</span><div class="case-tag">Compliance</div><div class="case-client">Public Companies</div><div class="case-title">Annual report automation that cuts generation from 4 weeks to 1 day with zero compliance penalties</div><div class="case-metrics"><div><div class="cm-v">60%</div><div class="cm-l">Cost reduction</div></div><div><div class="cm-v">75%</div><div class="cm-l">Time saved</div></div></div></div>
+    <div class="case"><span class="case-arrow">↗</span><div class="case-tag">Marketing</div><div class="case-client">Retail Enterprise</div><div class="case-title">Hyper-personalized ad engine generating 1,000+ variants monthly with real-time ROI tracking</div><div class="case-metrics"><div><div class="cm-v">50%</div><div class="cm-l">Faster launches</div></div><div><div class="cm-v">15%</div><div class="cm-l">Lower CAC</div></div></div></div>
   </div>
 </section>
 

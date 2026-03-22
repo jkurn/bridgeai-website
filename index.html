@@ -109,12 +109,11 @@
 
   /* ═══ TOGGLE ═══ */
   .toggle {
-    position: fixed; top: 20px; right: 160px; z-index: 1000;
     width: 40px; height: 40px; border-radius: 50%;
     background: var(--bg-glass); backdrop-filter: blur(20px);
     border: 1px solid var(--text-line); color: var(--text-lo); font-size: 14px;
     display: flex; align-items: center; justify-content: center;
-    cursor: pointer; transition: all 0.3s;
+    cursor: pointer; transition: all 0.3s; flex-shrink: 0;
   }
   .toggle:hover { border-color: var(--bright); color: var(--lime); }
 
@@ -157,6 +156,9 @@
   }
   .light-mode .nav-cta { background: var(--deep); color: #fff; }
   .light-mode .nav-cta:hover { background: var(--bright); }
+  .nav-actions {
+    display: flex; align-items: center; gap: 12px;
+  }
   .hamburger {
     display: none; background: none; border: none; cursor: pointer;
     width: 44px; height: 44px; align-items: center; justify-content: center;
@@ -634,6 +636,11 @@
   .reveal-delay-2 { transition-delay: 0.2s; }
   .reveal-delay-3 { transition-delay: 0.3s; }
 
+  @media (max-width: 1024px) {
+    .svc-grid { grid-template-columns: repeat(2, 1fr); }
+    .proc-grid { grid-template-columns: repeat(2, 1fr); }
+    .nav-links { gap: 20px; font-size: 13px; }
+  }
   @media (max-width: 768px) {
     .vp-grid, .svc-grid, .proc-grid { grid-template-columns: 1fr; }
     .case-grid, .m-row, .stats, .comp-grid { grid-template-columns: 1fr; }
@@ -651,15 +658,16 @@
 
 <div class="orb orb-1"></div>
 <div class="orb orb-2"></div>
-<button class="toggle" onclick="document.body.classList.toggle('light-mode');this.textContent=document.body.classList.contains('light-mode')?'☀':'☾'">☾</button>
-
 <div class="wrap">
 
 <nav class="nav">
   <div class="nav-logo">Bridge <span class="ai">AI</span> Knowledge</div>
   <ul class="nav-links"><li>Services</li><li>Case Studies</li><li>About</li><li>Insights</li></ul>
-  <a href="https://calendly.com/jonathankurniawan/30-min-call" target="_blank" class="nav-cta">Let's Talk</a>
-  <button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')" aria-label="Menu">☰</button>
+  <div class="nav-actions">
+    <button class="toggle" onclick="document.body.classList.toggle('light-mode');this.textContent=document.body.classList.contains('light-mode')?'☀':'☾'">☾</button>
+    <a href="https://calendly.com/jonathankurniawan/30-min-call" target="_blank" class="nav-cta">Let's Talk</a>
+    <button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')" aria-label="Menu">☰</button>
+  </div>
 </nav>
 <div class="mobile-menu">
   <button class="close-menu" onclick="this.parentElement.classList.remove('open')">&times;</button>

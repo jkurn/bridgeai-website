@@ -4,12 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bridge AI Knowledge — AI Consultancy</title>
+<meta name="description" content="Bridge AI Knowledge is a leading AI consultancy delivering transformation services — from AI strategy and governance to production-grade agents and automation.">
+<meta property="og:title" content="Bridge AI Knowledge — AI Consultancy">
+<meta property="og:description" content="We design, build, and run AI systems that handle real data at scale. Your path to production AI starts here.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://bridgeaiknowledge.com">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Bridge AI Knowledge — AI Consultancy">
+<meta name="twitter:description" content="We design, build, and run AI systems that handle real data at scale. Your path to production AI starts here.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔺</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,300;1,8..60,400&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    .reveal { opacity: 1 !important; transform: none !important; }
   }
 
   :root {
@@ -72,6 +82,8 @@
     transition: background 0.5s, color 0.5s;
   }
 
+  html { scroll-behavior: smooth; overflow-x: hidden; }
+  body { overflow-x: hidden; }
   ::selection { background: var(--bright); color: var(--lime); }
 
   .wrap { max-width: 1320px; margin: 0 auto; padding: 0 56px; }
@@ -137,6 +149,8 @@
   }
   .nav-links li { cursor: pointer; transition: color 0.2s; position: relative; }
   .nav-links li:hover { color: var(--text); }
+  .nav-links a { color: inherit; text-decoration: none; }
+  .mobile-menu a { color: inherit; text-decoration: none; }
   .nav-links li::after {
     content:''; position: absolute; bottom: -4px; left: 0;
     width: 0; height: 1px; background: var(--lime);
@@ -244,7 +258,7 @@
     font-family: var(--font-h); font-weight: 400; font-size: 15px;
     color: var(--text-mid); background: none; border: none;
     cursor: pointer; display: flex; align-items: center; gap: 8px;
-    min-height: 44px;
+    min-height: 44px; text-decoration: none;
     transition: color 0.25s, gap 0.3s var(--ease);
   }
   .btn-ghost:hover { color: var(--lime); gap: 14px; }
@@ -646,7 +660,7 @@
     .case-grid, .m-row, .stats, .comp-grid { grid-template-columns: 1fr; }
     .nav { margin: 0 -24px; padding: 18px 24px; }
     .nav-links { display: none; }
-    .nav-cta { display: none; }
+    .nav .nav-cta { display: none; }
     .hamburger { display: flex; }
     .stripe { margin: 0 -24px; }
     .detail-meta { flex-wrap: wrap; gap: 24px; }
@@ -662,7 +676,7 @@
 
 <nav class="nav">
   <div class="nav-logo">Bridge <span class="ai">AI</span> Knowledge</div>
-  <ul class="nav-links"><li>Services</li><li>Case Studies</li><li>About</li><li>Insights</li></ul>
+  <ul class="nav-links"><li><a href="#services">Services</a></li><li><a href="#cases">Case Studies</a></li><li><a href="#process">About</a></li><li><a href="#cta">Insights</a></li></ul>
   <div class="nav-actions">
     <button class="toggle" onclick="document.body.classList.toggle('light-mode');this.textContent=document.body.classList.contains('light-mode')?'☀':'☾'">☾</button>
     <a href="https://calendly.com/jonathankurniawan/30-min-call" target="_blank" class="nav-cta">Let's Talk</a>
@@ -671,7 +685,7 @@
 </nav>
 <div class="mobile-menu">
   <button class="close-menu" onclick="this.parentElement.classList.remove('open')">&times;</button>
-  <ul><li>Services</li><li>Case Studies</li><li>About</li><li>Insights</li><li><a href="https://calendly.com/jonathankurniawan/30-min-call" target="_blank" class="nav-cta">Let's Talk</a></li></ul>
+  <ul><li><a href="#services" onclick="this.closest('.mobile-menu').classList.remove('open')">Services</a></li><li><a href="#cases" onclick="this.closest('.mobile-menu').classList.remove('open')">Case Studies</a></li><li><a href="#process" onclick="this.closest('.mobile-menu').classList.remove('open')">About</a></li><li><a href="#cta" onclick="this.closest('.mobile-menu').classList.remove('open')">Insights</a></li><li><a href="https://calendly.com/jonathankurniawan/30-min-call" target="_blank" class="nav-cta">Let's Talk</a></li></ul>
 </div>
 
 <section class="hero">
@@ -680,7 +694,7 @@
   <p class="hero-sub">Bridge AI Knowledge is a leading AI consultancy that delivers transformation services to guide organizations into the new era of AI.</p>
   <div class="hero-ctas">
     <a href="https://calendly.com/jonathankurniawan/30-min-call" target="_blank" class="btn-green">Let's Talk</a>
-    <button class="btn-ghost">See our case studies <span>→</span></button>
+    <a href="#cases" class="btn-ghost">See our case studies <span>→</span></a>
   </div>
 </section>
 
@@ -718,7 +732,7 @@
 
 <div class="stripe"></div>
 
-<section class="services reveal">
+<section id="services" class="services reveal">
   <h2>What we do</h2>
   <div class="svc-grid">
     <div class="svc reveal reveal-delay-1">
@@ -762,10 +776,10 @@
 
 <div class="stripe"></div>
 
-<section class="cases reveal">
+<section id="cases" class="cases reveal">
   <div class="cases-top">
     <h2>Selected work</h2>
-    <button class="btn-ghost" style="font-size:13px;">All case studies <span>→</span></button>
+    <a href="#cases" class="btn-ghost" style="font-size:13px;">All case studies <span>→</span></a>
   </div>
   <div class="case-grid">
     <div class="case"><span class="case-arrow">↗</span><div class="case-tag">Real Estate Regulation</div><div class="case-client">OACIQ</div><div class="case-title">AI-powered compliance system for Quebec's real estate regulator, automating broker oversight and regulatory workflows</div><div class="case-metrics"><div><div class="cm-v">Live</div><div class="cm-l">Production</div></div><div><div class="cm-v">Quebec</div><div class="cm-l">Province-wide</div></div></div></div>
@@ -779,7 +793,7 @@
   </div>
 </section>
 
-<section class="process reveal">
+<section id="process" class="process reveal">
   <h2>How we work</h2>
   <div class="proc-grid">
     <div class="proc"><div class="proc-n">01</div><div class="proc-bar"></div><h3>Discover</h3><p>We sit with your team, look at your data, and figure out where AI will actually make money.</p></div>
@@ -791,7 +805,7 @@
 
 <div class="stripe"></div>
 
-<section class="cta reveal">
+<section id="cta" class="cta reveal">
   <div class="cta-glow"></div>
   <h2>Tell us what you're<br>trying to build</h2>
   <p class="sub">We'll tell you if AI is the right answer, what it'll cost, and how fast we can ship it. No pitch deck, just a straight conversation.</p>
@@ -800,7 +814,7 @@
 
 <footer class="foot">
   <div class="foot-c">© 2026 Bridge AI Knowledge</div>
-  <div class="foot-nav"><a href="#">Services</a><a href="#">Case Studies</a><a href="#">About</a><a href="#">LinkedIn</a></div>
+  <div class="foot-nav"><a href="#services">Services</a><a href="#cases">Case Studies</a><a href="#process">About</a><a href="https://www.linkedin.com/company/bridge-ai-knowledge" target="_blank">LinkedIn</a></div>
 </footer>
 
 </div>

@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VentureFab &mdash; AI Venture Fabrication</title>
+  <meta name="description" content="VentureFab fabricates autonomous businesses using 5 interlocking AI engines. From zero to $10K MRR in weeks, not months.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --fg: #e0e0e0;
+      --card: #12121a;
+      --muted: #1c1c2e;
+      --muted-fg: #6b7280;
+      --accent: #00ff88;
+      --accent-secondary: #ff00ff;
+      --accent-tertiary: #00d4ff;
+      --border: #2a2a3a;
+      --destructive: #ff3366;
+
+      --shadow-neon: 0 0 5px #00ff88, 0 0 10px #00ff8840;
+      --shadow-neon-sm: 0 0 3px #00ff88, 0 0 6px #00ff8830;
+      --shadow-neon-lg: 0 0 10px #00ff88, 0 0 20px #00ff8860, 0 0 40px #00ff8830;
+      --shadow-neon-secondary: 0 0 5px #ff00ff, 0 0 20px #ff00ff60;
+      --shadow-neon-tertiary: 0 0 5px #00d4ff, 0 0 20px #00d4ff60;
+
+      --chamfer: polygon(0 10px, 10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px));
+      --chamfer-sm: polygon(0 6px, 6px 0, calc(100% - 6px) 0, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0 calc(100% - 6px));
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      font-size: 16px;
+      line-height: 1.7;
+      letter-spacing: 0.02em;
+      overflow-x: hidden;
+    }
+
+    /* Scanline overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.15) 2px, rgba(0,0,0,0.15) 4px);
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* Circuit grid background */
+    .circuit-bg {
+      background-image:
+        linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-brand {
+      font-family: 'Orbitron', monospace;
+      font-weight: 900;
+      font-size: 1.25rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      text-shadow: var(--shadow-neon);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2rem; align-items: center; }
+    .nav-links a {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--muted-fg);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      transition: all 150ms;
+    }
+    .nav-links a:hover { color: var(--accent); text-shadow: var(--shadow-neon-sm); }
+    .nav-back {
+      font-size: 0.75rem;
+      color: var(--muted-fg);
+      text-decoration: none;
+      font-family: 'Share Tech Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .nav-back:hover { color: var(--accent); }
+
+    /* ===== CONTAINER ===== */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 5rem;
+      position: relative;
+    }
+    .hero-content { max-width: 800px; }
+    .hero-tag {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .hero-tag::before {
+      content: '>';
+      color: var(--accent-secondary);
+    }
+    .hero h1 {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 .accent { color: var(--accent); }
+    .hero h1 .accent-secondary { color: var(--accent-secondary); }
+
+    /* Glitch effect */
+    .cyber-glitch {
+      position: relative;
+      display: inline-block;
+    }
+    .cyber-glitch::before,
+    .cyber-glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+    }
+    .cyber-glitch::before {
+      color: var(--accent-secondary);
+      z-index: -1;
+      animation: glitch-1 4s infinite linear alternate-reverse;
+    }
+    .cyber-glitch::after {
+      color: var(--accent-tertiary);
+      z-index: -1;
+      animation: glitch-2 3s infinite linear alternate-reverse;
+    }
+
+    @keyframes glitch-1 {
+      0%, 90%, 100% { opacity: 0; transform: translate(0); }
+      91% { opacity: 0.8; transform: translate(-3px, 1px); }
+      92% { opacity: 0; }
+      95% { opacity: 0.6; transform: translate(2px, -1px); }
+      96% { opacity: 0; }
+    }
+    @keyframes glitch-2 {
+      0%, 85%, 100% { opacity: 0; transform: translate(0); }
+      86% { opacity: 0.7; transform: translate(2px, 1px); }
+      87% { opacity: 0; }
+      93% { opacity: 0.5; transform: translate(-2px, -1px); }
+      94% { opacity: 0; }
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--muted-fg);
+      line-height: 1.8;
+      max-width: 600px;
+      margin-bottom: 2.5rem;
+    }
+    .hero-sub strong { color: var(--fg); }
+
+    .hero-stats {
+      display: flex;
+      gap: 0;
+      margin-bottom: 2.5rem;
+      border: 1px solid var(--border);
+      clip-path: var(--chamfer);
+      background: var(--card);
+      width: fit-content;
+    }
+    .hero-stat {
+      padding: 1.25rem 2rem;
+      border-right: 1px solid var(--border);
+    }
+    .hero-stat:last-child { border-right: none; }
+    .hero-stat-value {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-shadow: var(--shadow-neon-sm);
+    }
+    .hero-stat-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--muted-fg);
+      margin-top: 0.25rem;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 2rem;
+      background: var(--accent);
+      color: var(--bg);
+      font-family: 'Orbitron', monospace;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      text-decoration: none;
+      clip-path: var(--chamfer-sm);
+      transition: all 150ms;
+      border: none;
+      cursor: pointer;
+    }
+    .hero-cta:hover {
+      filter: brightness(1.15);
+      box-shadow: var(--shadow-neon-lg);
+    }
+
+    /* ===== SECTION ===== */
+    section { padding: 6rem 0; }
+    .section-tag {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: var(--accent-tertiary);
+      margin-bottom: 1rem;
+    }
+    .section-tag::before { content: '// '; color: var(--muted-fg); }
+    .section-title {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+    .section-desc {
+      color: var(--muted-fg);
+      max-width: 600px;
+      margin-bottom: 3rem;
+      font-size: 0.95rem;
+    }
+
+    /* ===== ENGINE GRID ===== */
+    .engine-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+    .engine-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      clip-path: var(--chamfer);
+      padding: 2rem;
+      transition: all 300ms;
+      position: relative;
+    }
+    .engine-card:hover {
+      border-color: var(--accent);
+      box-shadow: var(--shadow-neon);
+      transform: translateY(-2px);
+    }
+    .engine-card.featured {
+      border-color: var(--accent);
+      box-shadow: var(--shadow-neon-sm);
+    }
+    .engine-number {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--muted-fg);
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      margin-bottom: 1rem;
+    }
+    .engine-name {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.25rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+    .engine-name .accent { color: var(--accent); }
+    .engine-name .magenta { color: var(--accent-secondary); }
+    .engine-name .cyan { color: var(--accent-tertiary); }
+    .engine-desc {
+      color: var(--muted-fg);
+      font-size: 0.85rem;
+      margin-bottom: 1.25rem;
+      line-height: 1.7;
+    }
+    .engine-output {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+    .engine-output::before { content: '> output: '; color: var(--muted-fg); }
+
+    /* ===== LIFECYCLE ===== */
+    .lifecycle {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border: 1px solid var(--border);
+      clip-path: var(--chamfer);
+      background: var(--card);
+    }
+    .lifecycle-stage {
+      padding: 2rem 1.5rem;
+      border-right: 1px solid var(--border);
+      transition: all 300ms;
+    }
+    .lifecycle-stage:last-child { border-right: none; }
+    .lifecycle-stage:hover { background: var(--muted); }
+    .lifecycle-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: var(--muted-fg);
+      margin-bottom: 0.75rem;
+    }
+    .lifecycle-target {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    .lifecycle-desc {
+      font-size: 0.75rem;
+      color: var(--muted-fg);
+      line-height: 1.6;
+    }
+
+    /* ===== TERMINAL SECTION ===== */
+    .terminal {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      clip-path: var(--chamfer);
+      overflow: hidden;
+    }
+    .terminal-header {
+      background: var(--muted);
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .terminal-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .terminal-dot.red { background: #ff5f57; }
+    .terminal-dot.yellow { background: #ffbd2e; }
+    .terminal-dot.green { background: #28c840; }
+    .terminal-title {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted-fg);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-left: 0.5rem;
+    }
+    .terminal-body { padding: 1.5rem 2rem; }
+    .terminal-line {
+      font-size: 0.85rem;
+      line-height: 2;
+      color: var(--muted-fg);
+    }
+    .terminal-line .prompt { color: var(--accent); }
+    .terminal-line .cmd { color: var(--fg); }
+    .terminal-line .output { color: var(--accent-tertiary); }
+    .terminal-line .success { color: var(--accent); }
+    .terminal-line .warn { color: #ffbd2e; }
+    .terminal-cursor {
+      display: inline-block;
+      width: 8px;
+      height: 1.1em;
+      background: var(--accent);
+      vertical-align: middle;
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* ===== HOW IT WORKS ===== */
+    .steps {
+      display: grid;
+      gap: 0;
+    }
+    .step {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 2rem;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .step:last-child { border-bottom: none; }
+    .step-number {
+      font-family: 'Orbitron', monospace;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--border);
+    }
+    .step-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+    .step-desc {
+      color: var(--muted-fg);
+      font-size: 0.85rem;
+      line-height: 1.7;
+    }
+
+    /* ===== STACK ===== */
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      clip-path: var(--chamfer);
+    }
+    .stack-item {
+      background: var(--card);
+      padding: 1.25rem 1.5rem;
+    }
+    .stack-layer {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--muted-fg);
+      margin-bottom: 0.35rem;
+    }
+    .stack-tech {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--fg);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 0;
+      margin-top: 4rem;
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-brand {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--muted-fg);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted-fg);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: all 150ms;
+    }
+    .footer-links a:hover { color: var(--accent); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hero-stats { flex-direction: column; width: 100%; }
+      .hero-stat { border-right: none; border-bottom: 1px solid var(--border); }
+      .hero-stat:last-child { border-bottom: none; }
+      .lifecycle { grid-template-columns: 1fr 1fr; }
+      .lifecycle-stage:nth-child(2) { border-right: none; }
+      .lifecycle-stage:nth-child(1), .lifecycle-stage:nth-child(2) { border-bottom: 1px solid var(--border); }
+      .step { grid-template-columns: 50px 1fr; gap: 1rem; }
+      .footer-inner { flex-direction: column; gap: 1.5rem; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+    @media (max-width: 480px) {
+      .lifecycle { grid-template-columns: 1fr; }
+      .lifecycle-stage { border-right: none; border-bottom: 1px solid var(--border); }
+      .lifecycle-stage:last-child { border-bottom: none; }
+      .engine-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .cyber-glitch::before, .cyber-glitch::after { animation: none; }
+      .terminal-cursor { animation: none; opacity: 1; }
+    }
+
+    /* Reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body class="circuit-bg">
+
+  <!-- NAV -->
+  <nav>
+    <a href="/venturefab" class="nav-brand">VentureFab</a>
+    <div class="nav-links">
+      <a href="#engines">Engines</a>
+      <a href="#lifecycle">Lifecycle</a>
+      <a href="#how">How It Works</a>
+      <a href="#stack">Stack</a>
+      <a href="/" class="nav-back">&larr; Bridge AI</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-tag">AI Venture Fabrication Engine</div>
+        <h1>
+          <span class="cyber-glitch" data-text="We fabricate">We fabricate</span><br>
+          <span class="accent">autonomous</span><br>
+          <span class="accent-secondary">businesses.</span>
+        </h1>
+        <p class="hero-sub">
+          5 interlocking AI engines. 1&ndash;3 humans per venture. From validated idea to
+          <strong>$10K MRR</strong> in weeks. VentureFab is the factory floor where
+          AI agents build, launch, and scale real companies.
+        </p>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="hero-stat-value">5</div>
+            <div class="hero-stat-label">AI Engines</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-value">10+</div>
+            <div class="hero-stat-label">Parallel Agents</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-value">$10K</div>
+            <div class="hero-stat-label">MRR Target</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-value">100</div>
+            <div class="hero-stat-label">Experiments</div>
+          </div>
+        </div>
+        <a href="https://github.com/jkurn/software-foundry" class="hero-cta" target="_blank">
+          View the Source &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ENGINES -->
+  <section id="engines" class="reveal">
+    <div class="container">
+      <div class="section-tag">The Five Engines</div>
+      <h2 class="section-title">Each engine is a <span style="color:var(--accent)">standalone product.</span></h2>
+      <p class="section-desc">
+        Separately deployable. Shared identity layer. Built for you first, productized for others second. Every engine compounds the next.
+      </p>
+      <div class="engine-grid">
+        <div class="engine-card">
+          <div class="engine-number">Engine 01</div>
+          <div class="engine-name"><span class="cyan">The Radar</span></div>
+          <div class="engine-desc">
+            Senses demand. Scrapes communities, scores TAM, validates problems before a single line of code is written.
+          </div>
+          <div class="engine-output">Validated opportunity with score</div>
+        </div>
+        <div class="engine-card featured">
+          <div class="engine-number">Engine 02 &mdash; Active</div>
+          <div class="engine-name"><span class="accent">The Foundry</span></div>
+          <div class="engine-desc">
+            AI code factory. 10+ parallel agents building products through a spec pipeline: Requirements &rarr; Blueprints &rarr; Work Orders &rarr; Code.
+          </div>
+          <div class="engine-output">Shipped product</div>
+        </div>
+        <div class="engine-card">
+          <div class="engine-number">Engine 03</div>
+          <div class="engine-name"><span class="magenta">The Garrison</span></div>
+          <div class="engine-desc">
+            Recruits AI agent employees. Like an internal job board &mdash; post a role, get a fit-for-purpose agent. SDRs, analysts, support.
+          </div>
+          <div class="engine-output">Deployed AI workforce</div>
+        </div>
+        <div class="engine-card">
+          <div class="engine-number">Engine 04</div>
+          <div class="engine-name"><span class="accent">The Launchpad</span></div>
+          <div class="engine-desc">
+            Distribution engine. Landing pages, email sequences, SEO, conversion tracking. The selling muscle, automated.
+          </div>
+          <div class="engine-output">Customers acquired</div>
+        </div>
+        <div class="engine-card">
+          <div class="engine-number">Engine 05</div>
+          <div class="engine-name"><span class="cyan">The Ledger</span></div>
+          <div class="engine-desc">
+            Monetization + measurement. Pricing, billing, unit economics, portfolio dashboard, kill criteria. The numbers that matter.
+          </div>
+          <div class="engine-output">Revenue + growth metrics</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIFECYCLE -->
+  <section id="lifecycle" class="reveal">
+    <div class="container">
+      <div class="section-tag">Venture Lifecycle</div>
+      <h2 class="section-title">From zero to <span style="color:var(--accent)">exit.</span></h2>
+      <p class="section-desc">
+        Every venture follows the same path. Clear gates. Measurable targets. Kill fast or scale hard.
+      </p>
+      <div class="lifecycle">
+        <div class="lifecycle-stage">
+          <div class="lifecycle-label">Stage 01</div>
+          <div class="lifecycle-target">Zero &rarr; One</div>
+          <div class="lifecycle-desc">Find product-market fit. Ruthless testing. Target: $10K MRR with trajectory.</div>
+        </div>
+        <div class="lifecycle-stage">
+          <div class="lifecycle-label">Stage 02</div>
+          <div class="lifecycle-target">One &rarr; M</div>
+          <div class="lifecycle-desc">Scale up. Understand the growth curve shape. Step-ladder or hockey stick.</div>
+        </div>
+        <div class="lifecycle-stage">
+          <div class="lifecycle-label">Stage 03</div>
+          <div class="lifecycle-target">M &rarr; $100M</div>
+          <div class="lifecycle-desc">Enterprise growth. Corporate actions. Satellite acquisitions. Shared services.</div>
+        </div>
+        <div class="lifecycle-stage">
+          <div class="lifecycle-label">Stage 04</div>
+          <div class="lifecycle-target">Exit</div>
+          <div class="lifecycle-desc">Strategic acquisition. Spin-off. Financing. The endgame for each portfolio company.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how" class="reveal">
+    <div class="container">
+      <div class="section-tag">How It Works</div>
+      <h2 class="section-title">The <span style="color:var(--accent-secondary)">build chain.</span></h2>
+      <p class="section-desc">
+        Each phase proves the last. No speculative builds. Each product is built because the venture demands it.
+      </p>
+      <div class="terminal">
+        <div class="terminal-header">
+          <div class="terminal-dot red"></div>
+          <div class="terminal-dot yellow"></div>
+          <div class="terminal-dot green"></div>
+          <div class="terminal-title">venturefab &mdash; build sequence</div>
+        </div>
+        <div class="terminal-body">
+          <div class="terminal-line"><span class="prompt">$</span> <span class="cmd">fabricate --engine foundry</span> <span class="success">DONE</span></div>
+          <div class="terminal-line"><span class="prompt">$</span> <span class="cmd">fabricate --engine launchpad</span> <span class="output">IN PROGRESS</span></div>
+          <div class="terminal-line"><span class="prompt">$</span> <span class="cmd">fabricate --venture stella-data-ops</span> <span class="output">QUEUED</span></div>
+          <div class="terminal-line"><span class="prompt">$</span> <span class="cmd">fabricate --engine garrison</span> <span class="warn">PENDING</span></div>
+          <div class="terminal-line"><span class="prompt">$</span> <span class="cmd">fabricate --engine radar</span> <span class="warn">PENDING</span></div>
+          <div class="terminal-line"><span class="prompt">$</span> <span class="cmd">fabricate --engine ledger</span> <span class="warn">PENDING</span></div>
+          <div class="terminal-line"><span class="prompt">&gt;</span> <span class="terminal-cursor"></span></div>
+        </div>
+      </div>
+      <div class="steps" style="margin-top: 3rem;">
+        <div class="step">
+          <div class="step-number">01</div>
+          <div>
+            <div class="step-title">Radar <span style="color:var(--accent-tertiary)">senses demand</span></div>
+            <div class="step-desc">Scrapes communities, scores opportunities, validates the problem exists with paying customers.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">02</div>
+          <div>
+            <div class="step-title">Foundry <span style="color:var(--accent)">builds the product</span></div>
+            <div class="step-desc">10+ parallel AI agents ship working software through a spec pipeline. Requirements to deployed code in days.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">03</div>
+          <div>
+            <div class="step-title">Garrison <span style="color:var(--accent-secondary)">recruits the workforce</span></div>
+            <div class="step-desc">AI agent employees purpose-built for the venture. SDRs, support, analysts &mdash; deployed from a job board for agents.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">04</div>
+          <div>
+            <div class="step-title">Launchpad <span style="color:var(--accent)">distributes to market</span></div>
+            <div class="step-desc">Landing pages, email sequences, SEO, conversion tracking. The selling machine, automated end to end.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">05</div>
+          <div>
+            <div class="step-title">Ledger <span style="color:var(--accent-tertiary)">measures everything</span></div>
+            <div class="step-desc">Revenue, churn, unit economics, portfolio health. Hit $10K MRR with growth trajectory? Graduate. Miss targets? Kill fast.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section id="stack" class="reveal">
+    <div class="container">
+      <div class="section-tag">Tech Stack</div>
+      <h2 class="section-title">Built on <span style="color:var(--accent)">compound infrastructure.</span></h2>
+      <p class="section-desc">
+        One monorepo. Shared packages across all engines. Build once, compound forever.
+      </p>
+      <div class="stack-grid">
+        <div class="stack-item">
+          <div class="stack-layer">Monorepo</div>
+          <div class="stack-tech">Turborepo + pnpm</div>
+        </div>
+        <div class="stack-item">
+          <div class="stack-layer">Frontend</div>
+          <div class="stack-tech">Next.js + Tailwind</div>
+        </div>
+        <div class="stack-item">
+          <div class="stack-layer">API</div>
+          <div class="stack-tech">Cloudflare Workers</div>
+        </div>
+        <div class="stack-item">
+          <div class="stack-layer">Database</div>
+          <div class="stack-tech">Supabase</div>
+        </div>
+        <div class="stack-item">
+          <div class="stack-layer">Auth</div>
+          <div class="stack-tech">Supabase Auth (PKCE)</div>
+        </div>
+        <div class="stack-item">
+          <div class="stack-layer">Orchestration</div>
+          <div class="stack-tech">Conductor.build</div>
+        </div>
+        <div class="stack-item">
+          <div class="stack-layer">AI Agents</div>
+          <div class="stack-tech">Claude Code + gstack</div>
+        </div>
+        <div class="stack-item">
+          <div class="stack-layer">CI/CD</div>
+          <div class="stack-tech">GitHub Actions</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">VentureFab &mdash; by Bridge AI Knowledge</div>
+        <div class="footer-links">
+          <a href="https://github.com/jkurn/software-foundry" target="_blank">GitHub</a>
+          <a href="/">Bridge AI</a>
+          <a href="https://linkedin.com/in/jonathankurniawan" target="_blank">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
